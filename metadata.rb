@@ -18,6 +18,7 @@ depends "openssl"
 depends "build-essential"
 suggests "homebrew"
 suggests "windows"
+depends "apparmor"
 
 attribute "mysql/server_root_password",
   :display_name => "MySQL Server Root Password",

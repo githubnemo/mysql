@@ -71,6 +71,19 @@ if platform_family?(%w{debian})
     mode "0600"
   end
 
+  if node['platform'] == "ubuntu" then
+    template "/etc/apparmor.d/local/usr.sbin.mysqld" do
+      source "usr.sbin.mysqld.erb"
+      owner "root"
+      group "root"
+      mode  "0600"
+    end
+
+    service "apparmor" do
+      action :reload
+    end
+  end
+
 end
 
 if platform_family?('windows')
