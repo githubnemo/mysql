@@ -97,6 +97,16 @@ node['mysql']['server']['packages'].each do |package_name|
   end
 end
 
+# Mount the MySQL data dir share so that the MySQL data is on the host.
+# This can be done only after MySQL is installed, as we need the mysql
+# user and group id.
+if node['mysql']['use_shared_data_dir'] then
+	execute "mount_mysql_data_dir" do
+		command "mount -t vboxsf -o uid=`id -u mysql` -o gid=`id -g mysql` #{node['mysql']['shared_data_dir_name']} #{node['mysql']['data_dir']}"
+		action :run
+	end
+end
+
 unless platform_family?(%w{mac_os_x})
 
   [File.dirname(node['mysql']['pid_file']),

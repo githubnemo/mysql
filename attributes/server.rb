@@ -21,6 +21,9 @@ default['mysql']['bind_address']               = attribute?('cloud') ? cloud['lo
 default['mysql']['port']                       = 3306
 default['mysql']['nice']                       = 0
 
+default['mysql']['use_shared_data_dir']        = false
+default['mysql']['shared_data_dir_name']       = "mysql"
+
 case node["platform_family"]
 when "debian"
   default['mysql']['server']['packages']      = %w{mysql-server}
