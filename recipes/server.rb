@@ -116,6 +116,7 @@ end
 if node['mysql']['use_shared_data_dir'] then
 	execute "mount_mysql_data_dir" do
 		command "mount -t vboxsf -o uid=`id -u mysql` -o gid=`id -g mysql` #{node['mysql']['shared_data_dir_name']} #{node['mysql']['data_dir']}"
+		not_if "mount | grep '#{node['mysql']['shared_data_dir_name']}' | grep -q \"uid=`id -u mysql`\""
 		action :run
 	end
 end
